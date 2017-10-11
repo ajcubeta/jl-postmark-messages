@@ -146,7 +146,8 @@ Postmark has [Messages API](http://developer.postmarkapp.com/developer-api-messa
       rails postmark_messages:import_message_details --trace
     ```
 
-# Message html_body as html string will display on iFrame using srcdoc attribute from Html5.
+# Dispaly message html_body inside iFrame
+  * Message inside html_body as html string will display on iFrame using srcdoc attribute from HTML5.
   - https://github.com/jugglinmike/srcdoc-polyfill
 
 On going! ...
