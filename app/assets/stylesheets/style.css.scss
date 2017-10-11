@@ -1,0 +1,73 @@
+@import "mixins.css.scss";
+@import "bootstrap";
+
+.logo {
+  margin: 10px auto;
+}
+
+.pages {
+  position: relative;
+  float: right;
+
+  .found {
+    padding: 10px;
+    font-size: 90%; color: #777;
+    float: left;
+  }
+
+  .pagination {
+    @include helvetica;
+    text-align: right;
+    float: right;
+    padding: 10px 0 5px 0;
+
+    em { color: #444; font-style: normal; font-weight: bold; }
+    span, a, em { padding: 0 3px; font-size: 90% }
+
+    img { position: relative; top: 4px; padding: 0px; }
+
+    a:active {
+      position: relative; top: 1px;
+    }
+  }
+
+  .download {
+    position: relative; top: 10px; right: 10px;
+    text-align: right;
+  }
+}
+
+.primary {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+
+  li {
+    margin-left: 8px;
+    float: left;
+    position: relative;
+
+    a {
+      display: block;
+      padding: 3px 10px;
+      font-weight: bold;
+      color: #4d4d4d;
+      text-decoration: none;
+    }
+
+    a.current {
+      background-color: #51585f;
+      color: #fff;
+      text-decoration: none;
+      @include rounded-corner;
+    }
+
+    a.has_sub {
+      padding-right: 23px;
+    }
+  }
+}
+
+.pad-top { margin: auto 0px; }
