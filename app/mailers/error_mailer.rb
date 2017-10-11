@@ -14,7 +14,7 @@ class ErrorMailer < ActionMailer::Base
     enable_starttls_auto: true
   }
 
-  def notify_sysadmin(title, msg, backtrace = nil, errors, emails = "#{ENV["TECH3_JOBLINE"]}")
+  def notify_sysadmin(title, msg, backtrace = nil, errors, emails = 'tech3@jobline.com.sg')
     @msg       = msg
     @title     = title
     @backtrace = backtrace
