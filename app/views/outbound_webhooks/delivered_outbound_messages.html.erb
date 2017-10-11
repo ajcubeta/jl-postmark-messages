@@ -1,0 +1,29 @@
+<h1><%= @title %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Payload</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @webhooks.blank? %>
+      <tr>
+        <td> - </td>
+        <td> - </td>
+        <td> - </td>
+      </tr>
+    <% else %>
+      <% @webhooks.each do |webhook| %>
+        <tr>
+          <td><%= webhook.payload %></td>
+          <td><%= link_to 'Show', webhook %></td>
+          <!-- <td><%= link_to 'Destroy', webhook, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

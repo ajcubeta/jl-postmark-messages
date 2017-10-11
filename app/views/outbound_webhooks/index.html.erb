@@ -1,0 +1,39 @@
+<div class="container">
+
+  <h2><%= @title %></h2>
+
+  <p>Here's the list of outbound webhooks payload POSTed from Postmark</p>
+
+  <div class="pages">
+    <%= will_paginate @webhooks, class: 'found' %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Payload</th>
+          <th>Type</th>
+          <th> </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @webhooks.blank? %>
+          <tr>
+            <td> - </td>
+            <td> - </td>
+            <td> - </td>
+          </tr>
+        <% else %>
+          <% @webhooks.each do |webhook| %>
+            <tr>
+              <td><%= webhook.payload %></td>
+              <td><%= webhook.webhook_type %></td>
+              <td><%= link_to 'Show', webhook %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

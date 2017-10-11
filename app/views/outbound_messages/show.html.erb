@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Back', outbound_messages_path %>
+
+<br /><br />
+
+<p><small>SUBJECT</small>: <span><strong><%= @message.subject %></strong></span></p>
+
+<p><small>FROM</strong></small>: <span><%= @message.from %></span></p>
+
+<p><small>TAG</strong></small>: <span><%= @message.tag %></span></p>
+
+<p><small>OPEN TRACKING</strong></small>: <span><%= @message.open_tracking %></span></p>
+
+<p><small>LINK TRACKING</strong></small>: <span><%= @message.link_tracking %></span></p>
+
+<p><small>MESSAGE</strong></small>:</p>
+
+<iframe style="width: 50vw;height: 75vh;position: relative;" srcdoc="<%= @message.html_body %>" frameborder="0"></iframe>

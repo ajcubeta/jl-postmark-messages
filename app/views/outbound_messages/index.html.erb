@@ -1,0 +1,40 @@
+<div class="container">
+  <h2><%= @title %></h2>
+  <p>Here's the list of messages imported from Postmark</p>
+
+  <div class="pages">
+    <%= will_paginate @messages, class: 'found' %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th style="width:13%">Tag</th>
+          <th style="width:16%">Date &amp; Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @messages.blank? %>
+          <tr>
+            <td> - </td>
+            <td> - </td>
+            <td> - </td>
+          </tr>
+        <% else %>
+          <% @messages.each do |msg| %>
+            <tr>
+              <td>
+                <%= link_to "#{msg.try(:subject)}", outbound_message_path(id: msg.message_id) %><br />
+                <small>(MessageID: <%= msg.try(:message_id) %>)</small>
+              </td>
+              <td><small><%= msg.try(:tag) %></small></td>
+              <td><small><%= msg.received_at.strftime("%b %m, %l:%M:%S %p") %></small></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
