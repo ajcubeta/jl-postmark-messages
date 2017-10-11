@@ -1,8 +1,10 @@
 class OutboundWebhook < ApplicationRecord
   def migrate_message!
+    Rails.logger.info "Webhook payload MessageID: #{self.payload["MessageID"]}"
     msg_id = self.payload["MessageID"]
 
     if msg_id
+      Rails.logger.info ""
       begin
         MessageDetail.import_message_detail(msg_id)
       rescue Exception => e
