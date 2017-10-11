@@ -31,3 +31,9 @@
 
 en:
   hello: "Hello world"
+
+en:
+  hello: "Hello world"
+  will_paginate:
+    previous_label: "<img src=\"/images/previous.png\" alt=\"Previous\">"
+    next_label: "<img src=\"/images/next.png\" alt=\"Next\">"
