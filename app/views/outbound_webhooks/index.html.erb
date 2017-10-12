@@ -14,6 +14,7 @@
         <tr>
           <th>Payload</th>
           <th>Type</th>
+          <th>Copied</th>
           <th> </th>
         </tr>
       </thead>
@@ -23,12 +24,14 @@
             <td> - </td>
             <td> - </td>
             <td> - </td>
+            <td> - </td>
           </tr>
         <% else %>
           <% @webhooks.each do |webhook| %>
             <tr>
               <td><%= webhook.payload %></td>
               <td><%= webhook.webhook_type %></td>
+              <td><%= webhook.created_at.strftime("%b %m, %l:%M:%S %p") %></td>
               <td><%= link_to 'Show', webhook %></td>
             </tr>
           <% end %>
