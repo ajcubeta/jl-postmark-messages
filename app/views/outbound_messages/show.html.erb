@@ -6,9 +6,9 @@
 
 <p><small>SUBJECT</small>: <span><strong><%= @message.subject %></strong></span></p>
 
-<p><small>FROM</strong></small>: <span><%= @message.from %></span></p>
+<p><small>FROM</strong></small>: <span><a href="mailto:<%= @message.from %>" target="_top"><%= @message.from %></a></span></p>
 
-<p><small>TAG</strong></small>: <span><%= @message.tag %></span></p>
+<p><small>TAG</strong></small>: <i><span><%= @message.tag %></i></span></p>
 
 <p><small>OPEN TRACKING</strong></small>: <span><%= @message.open_tracking %></span></p>
 
@@ -22,19 +22,18 @@
       <% if event['Type'].eql?("Delivered") %>
         <div>
           <ul style="list-style: none;">
-            <li><small>Message <b><%= event['Type'] %></b> to <a href="mailto:<%= event["Recipient"] %>" target="_top"><%= event["Recipient"] %></a> <br /></small></li>
-            <li><small><%= event['Details']['DeliveryMessage'] %></small></li>
-            <li><small><%= event['Details']['DestinationServer'] %></small></li>
-            <li><small><%= event['Details']['ReceivedAt'] %></small></li>
+            <li><small>Message <font color='green'><b><%= event['Type'] %></b></font> to <a href="mailto:<%= event["Recipient"] %>" target="_top"><%= event["Recipient"] %></a> <br /></small></li>
+            <li><small><font color='grey'><%= event['Details']['DeliveryMessage'] %></font></small></li>
+            <li><small><font color='maroon'><%= event['Details']['DestinationServer'] %></font></small></li>
+            <li><small><font color='orange'><%= event['ReceivedAt'].to_date.strftime("%b %m, %l:%M %p") rescue '' %></font></small></li>
           </ul>
         </div>
       <% elsif event['Type'].eql?("Opened") %>
         <div>
           <ul style="list-style: none;">
-            <li><small>Message <b><%= event['Type'] %></b> by <a href="mailto:<%= event["Recipient"] %>" target="_top"><%= event["Recipient"] %></a> <br /></small></li>
-            <li><small><%= event['Details']['Summary'] %></small></li>
-            <li><small><%= event['Details']['ReceivedAt'].strftime("%b %m, %l:%M:%S %p") rescue '' %></small></li>
-            <li><small><%= event['Details']['ReceivedAt'] %></small></li>
+            <li><small>Message <font color='blue'><b><%= event['Type'] %></b></font> by <a href="mailto:<%= event["Recipient"] %>" target="_top"><%= event["Recipient"] %></a> <br /></small></li>
+            <li><small><font color='grey'><%= event['Details']['Summary'] %></font></small></li>
+            <li><small><font color='orange'><%= event['ReceivedAt'].to_date.strftime("%b %m, %l:%M %p") rescue '' %></font></small></li>
           </ul>
         </div>
       <% end %>
@@ -43,5 +42,5 @@
 </div>
 
 <!-- <p><small>MESSAGE</strong></small>:</p> -->
-<!-- .strftime("%b %m, %l:%M:%S %p") rescue '' -->
+<!-- <li><small><%= event['ReceivedAt'].strftime("%b %m, %l:%M:%S %p") rescue '' %></small></li> -->
 <iframe style="width: 50vw;height: 75vh;position: relative;" srcdoc="<%= @message.html_body %>" frameborder="0"></iframe>
