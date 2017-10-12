@@ -25,12 +25,16 @@
         <% else %>
           <% @messages.each do |msg| %>
             <tr>
-              <td>
-                <%= link_to "#{msg.try(:subject)}", outbound_message_path(id: msg.message_id) %><br />
-                <small>(MessageID: <%= msg.try(:message_id) %>)</small>
-              </td>
-              <td><small><%= msg.try(:tag) %></small></td>
-              <td><small><%= msg.received_at.strftime("%b %m, %l:%M:%S %p") %></small></td>
+              <% unless msg.message_id.blank? %>
+                <td>
+                  <%= link_to "#{msg.try(:subject)}", outbound_message_path(id: msg.message_id) %><br />
+                  <small>(MessageID: <%= msg.try(:message_id) %>)</small>
+                </td>
+              <% end %>
+              <% unless msg.tag.blank? %><td><small><%= msg.try(:tag) %></small></td><% end %>
+              <% unless msg.received_at.blank? %>
+                <td><small><%= msg.received_at.strftime("%b %m, %l:%M:%S %p") %></small></td>
+              <% end %>
             </tr>
           <% end %>
         <% end %>
