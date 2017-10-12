@@ -25,7 +25,7 @@
             <li><small>Message <font color='green'><b><%= event['Type'] %></b></font> to <a href="mailto:<%= event["Recipient"] %>" target="_top"><%= event["Recipient"] %></a> <br /></small></li>
             <li><small><font color='grey'><%= event['Details']['DeliveryMessage'] %></font></small></li>
             <li><small><font color='maroon'><%= event['Details']['DestinationServer'] %></font></small></li>
-            <li><small><font color='orange'><%= event['ReceivedAt'].to_date.strftime("%b %m, %l:%M %p") rescue '' %></font></small></li>
+            <li><small><font color='orange'><%= event['ReceivedAt'].to_datetime.strftime("%b %m, %l:%M %p") rescue '' %></font></small></li>
           </ul>
         </div>
       <% elsif event['Type'].eql?("Opened") %>
@@ -33,7 +33,7 @@
           <ul style="list-style: none;">
             <li><small>Message <font color='blue'><b><%= event['Type'] %></b></font> by <a href="mailto:<%= event["Recipient"] %>" target="_top"><%= event["Recipient"] %></a> <br /></small></li>
             <li><small><font color='grey'><%= event['Details']['Summary'] %></font></small></li>
-            <li><small><font color='orange'><%= event['ReceivedAt'].to_date.strftime("%b %m, %l:%M %p") rescue '' %></font></small></li>
+            <li><small><font color='orange'><%= event['ReceivedAt'].to_datetime.strftime("%b %m, %l:%M %p") rescue '' %></font></small></li>
           </ul>
         </div>
       <% end %>
