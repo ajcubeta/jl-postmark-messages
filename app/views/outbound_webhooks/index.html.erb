@@ -30,8 +30,8 @@
           <% @webhooks.each do |webhook| %>
             <tr>
               <td><%= webhook.payload %></td>
-              <td><%= webhook.webhook_type %></td>
-              <td><%= webhook.created_at.strftime("%b %m, %l:%M:%S %p") %></td>
+              <td><small><%= webhook.webhook_type %></small></td>
+              <td><small><%= webhook.created_at.strftime("%b %m, %l:%M:%S %p") %></small></td>
               <td><%= link_to 'Show', webhook %></td>
             </tr>
           <% end %>
