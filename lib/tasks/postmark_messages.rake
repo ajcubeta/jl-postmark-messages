@@ -66,7 +66,7 @@ namespace :postmark_messages do
     errors = []
 
     begin
-      10.downto(0) { |i|
+      5.downto(0) { |i|
         days_ago = Date.today - i
         date_request = days_ago.strftime("%Y-%m-%d")
 
