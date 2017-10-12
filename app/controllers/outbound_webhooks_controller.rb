@@ -17,9 +17,14 @@ class OutboundWebhooksController < ApplicationController
     @webhook = OutboundWebhook.new(payload: request.body.read, webhook_type: 'Delivered')
 
     if @webhook.save
-      Rails.logger.info "Webhook payload : #{@webhook.payload}"
-      Rails.logger.info "Webhook ID: #{@webhook.id} and MessageID is #{@webhook.payload[:MessageID]}"
-      @webhook.migrate_message!
+      payload = @webhook.payload
+      Rails.logger.info "Webhook payload : #{payload}"
+      pj = payload.to_json
+      Rails.logger.info "Webhook payload to json : #{pj}"
+      load = JSON.parse(pj)
+      Rails.logger.info "Webhook payload parsed : #{load["MessageID"]}"
+      # Rails.logger.info "Webhook ID: #{@webhook.id} and MessageID is #{@webhook.payload[:MessageID]}"
+      # @webhook.migrate_message!
       render json: @webhook, status: :created
     else
       render json: @webhook.errors, status: :unprocessable_entity
