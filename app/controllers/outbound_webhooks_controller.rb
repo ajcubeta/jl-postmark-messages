@@ -22,7 +22,7 @@ class OutboundWebhooksController < ApplicationController
       pj = payload.to_json
       Rails.logger.info "Webhook payload to json : #{pj}"
       load = JSON.parse(pj)
-      Rails.logger.info "Webhook payload parsed : #{load["MessageID"]}"
+      Rails.logger.info "Webhook payload parsed : #{load[:MessageID]}"
       # Rails.logger.info "Webhook ID: #{@webhook.id} and MessageID is #{@webhook.payload[:MessageID]}"
       # @webhook.migrate_message!
       render json: @webhook, status: :created
