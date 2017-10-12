@@ -14,7 +14,7 @@
 
 <p><small>LINK TRACKING</strong></small>: <span><%= @message.link_tracking %></span></p>
 
-<p><small>TO</strong></small>:</p>
+<p><small>RECIPIENT(s)</strong></small>:</p>
 
 <div>
   <% @message.message_events.each do |event| %>
@@ -22,7 +22,7 @@
       <% if event['Type'].eql?("Delivered") %>
         <div>
           <ul style="list-style: none;">
-            <li><small><b><%= event['Type'] %></b> to <a href="mailto:<%= event["Recipient"] %>" target="_top"><%= event["Recipient"] %></a> <br /></small></li>
+            <li><small>Message <b><%= event['Type'] %></b> to <a href="mailto:<%= event["Recipient"] %>" target="_top"><%= event["Recipient"] %></a> <br /></small></li>
             <li><small><%= event['Details']['DeliveryMessage'] %></small></li>
             <li><small><%= event['Details']['DestinationServer'] %></small></li>
             <li><small><%= event['Details']['ReceivedAt'] %></small></li>
@@ -31,7 +31,7 @@
       <% elsif event['Type'].eql?("Opened") %>
         <div>
           <ul style="list-style: none;">
-            <li><small><b><%= event['Type'] %></b> by <a href="mailto:<%= event["Recipient"] %>" target="_top"><%= event["Recipient"] %></a> <br /></small></li>
+            <li><small>Message <b><%= event['Type'] %></b> by <a href="mailto:<%= event["Recipient"] %>" target="_top"><%= event["Recipient"] %></a> <br /></small></li>
             <li><small><%= event['Details']['Summary'] %></small></li>
             <li><small><%= event['Details']['ReceivedAt'].strftime("%b %m, %l:%M:%S %p") rescue '' %></small></li>
             <li><small><%= event['Details']['ReceivedAt'] %></small></li>
