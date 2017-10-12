@@ -18,7 +18,7 @@ class OutboundWebhooksController < ApplicationController
 
     if @webhook.save
       Rails.logger.info "Webhook payload : #{@webhook.payload}"
-      Rails.logger.info "Webhook ID: #{@webhook.id} and MessageID is #{@webhook.payload["MessageID"]}"
+      Rails.logger.info "Webhook ID: #{@webhook.id} and MessageID is #{@webhook.payload[:MessageID]}"
       @webhook.migrate_message!
       render json: @webhook, status: :created
     else
