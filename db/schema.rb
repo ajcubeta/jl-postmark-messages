@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171011080650) do
+ActiveRecord::Schema.define(version: 20171012063804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "message_detail_events", force: :cascade do |t|
+    t.text "message_id"
+    t.text "type"
+    t.jsonb "details"
+    t.text "recipient"
+    t.datetime "received_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id"], name: "index_message_detail_events_on_message_id"
+    t.index ["recipient"], name: "index_message_detail_events_on_recipient"
+    t.index ["type"], name: "index_message_detail_events_on_type"
+  end
 
   create_table "message_details", force: :cascade do |t|
     t.text "text_body"
