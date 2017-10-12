@@ -20,10 +20,10 @@ class OutboundWebhooksController < ApplicationController
       payload = @webhook.payload
       Rails.logger.info "Webhook payload : #{payload}"
       Rails.logger.info "Webhook payload class : #{payload.class}"
-      payload_as_json = payload.as_json.with_indifferent_access #ActiveSupport::HashWithIndifferentAccess
-      Rails.logger.info "Webhook payload to json : #{payload_as_json}"
-      load = JSON.parse(payload_as_json)
-      Rails.logger.info "Webhook payload parsed : #{load[:MessageID]}"
+      # payload_as_json = payload.as_json.with_indifferent_access #ActiveSupport::HashWithIndifferentAccess
+      # Rails.logger.info "Webhook payload to json : #{payload_as_json}"
+      payload = JSON.parse(payload)
+      Rails.logger.info "Webhook payload parsed : #{payload[:MessageID]}"
       # Rails.logger.info "Webhook ID: #{@webhook.id} and MessageID is #{@webhook.payload[:MessageID]}"
       # @webhook.migrate_message!
       render json: @webhook, status: :created
