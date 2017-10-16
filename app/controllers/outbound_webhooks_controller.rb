@@ -20,7 +20,29 @@ class OutboundWebhooksController < ApplicationController
       begin
         payload = @webhook.payload
         parsed_payload = JSON.parse(payload)
-        Rails.logger.info "Webhook payload parsed MessageID: #{parsed_payload['MessageID']}"
+        Rails.logger.info "Delivery Webhook payload parsed MessageID: #{parsed_payload['MessageID']}"
+        MessageDetail.import_message_detail(parsed_payload['MessageID'])
+      rescue Exception => e
+        puts "#{e.message} \n\n #{e.backtrace.inspect} : #{parsed_payload['MessageID']}"
+        ErrorMailer.notify_sysadmin("Importing message details from postmark has error #{parsed_payload['MessageID']}", e.message, e.backtrace).deliver
+      end
+
+      render json: @webhook, status: :created
+    else
+      render json: @webhook.errors, status: :unprocessable_entity
+    end
+  end
+
+  def opens
+    request.body.rewind
+    @webhook = OutboundWebhook.new(payload: request.body.read, webhook_type: 'Opened')
+
+    if @webhook.save
+
+      begin
+        payload = @webhook.payload
+        parsed_payload = JSON.parse(payload)
+        Rails.logger.info "Opens Webhook payload parsed MessageID: #{parsed_payload['MessageID']}"
         MessageDetail.import_message_detail(parsed_payload['MessageID'])
       rescue Exception => e
         puts "#{e.message} \n\n #{e.backtrace.inspect} : #{parsed_payload['MessageID']}"
@@ -36,17 +58,6 @@ class OutboundWebhooksController < ApplicationController
   def bounce
     request.body.rewind
     @webhook = OutboundWebhook.new(payload: request.body.read, webhook_type: 'Bounced')
-
-    if @webhook.save
-      render json: @webhook, status: :created
-    else
-      render json: @webhook.errors, status: :unprocessable_entity
-    end
-  end
-
-  def opens
-    request.body.rewind
-    @webhook = OutboundWebhook.new(payload: request.body.read, webhook_type: 'Opened')
 
     if @webhook.save
       render json: @webhook, status: :created

@@ -1,10 +1,49 @@
 class MessageDetail < ApplicationRecord
   def self.import_message_detail(msg_id)
     msg_detail = MessageDetail.where(message_id: msg_id).take
+    detail = query_postmark_outbound_message_details(msg_id) if msg_id
 
-    unless msg_detail
-      detail = query_postmark_outbound_message_details(msg_id)
-
+    if msg_detail
+      msg_detail.update_attributes(
+        text_body: detail["TextBody"] rescue '',
+        html_body: detail["HtmlBody"] rescue '',
+        tag: detail["Tag"] rescue '',
+        message_id: detail["MessageID"] rescue '',
+        to: detail["To"] rescue [],
+        cc: detail["Cc"] rescue [],
+        bcc: detail["Bcc"] rescue [],
+        recipients: detail["Recipients"] rescue [],
+        received_at: detail["ReceivedAt"] rescue nil,
+        from: detail["From"] rescue '',
+        subject: detail["Subject"] rescue '',
+        attachments: detail["Attachments"] rescue [],
+        status: detail["Status"] rescue '',
+        track_opens: detail["TrackOpens"] rescue nil,
+        track_opens: detail["TrackLinks"] rescue '',
+        message_events: detail["MessageEvents"] rescue []
+      )
+      if msg_detail.save
+        puts "Update imported message details of MessageID : #{msg_id}"
+        outbound_message = OutboundMessage.where(message_id: msg_id).take
+        puts "Updating Message MessageID#{message_detail.message_id} to OutboundMessage"
+        outbound_message.update_attributes(
+          tag: detail["Tag"] rescue '',
+          message_id: detail["MessageID"] rescue '',
+          to: detail["To"] rescue [],
+          cc: detail["Cc"] rescue [],
+          bcc: detail["Bcc"] rescue [],
+          recipients: detail["Recipients"] rescue [],
+          received_at: detail["ReceivedAt"] rescue nil,
+          from: detail["From"] rescue '',
+          subject: detail["Subject"] rescue '',
+          attachments: detail["Attachments"] rescue [],
+          status: detail["Status"] rescue '',
+          track_opens: detail["TrackOpens"] rescue nil,
+          track_opens: detail["TrackLinks"] rescue ''
+        )
+        outbound_message.save
+      end
+    else
       begin
         message_detail = MessageDetail.new
         message_detail.text_body = detail["TextBody"] rescue ''
