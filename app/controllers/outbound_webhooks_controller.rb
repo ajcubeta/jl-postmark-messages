@@ -17,17 +17,16 @@ class OutboundWebhooksController < ApplicationController
     @webhook = OutboundWebhook.new(payload: request.body.read, webhook_type: 'Delivered')
 
     if @webhook.save
-      payload = @webhook.payload
-      Rails.logger.info "Webhook payload : #{payload}"
-      Rails.logger.info "Webhook payload class : #{payload.class}"
-      # payload_as_json = payload.as_json.with_indifferent_access #ActiveSupport::HashWithIndifferentAccess
-      # Rails.logger.info "Webhook payload to json : #{payload_as_json}"
+      begin
+        payload = @webhook.payload
+        parsed_payload = JSON.parse(payload)
+        Rails.logger.info "Webhook payload parsed MessageID: #{parsed_payload['MessageID']}"
+        MessageDetail.import_message_detail(parsed_payload['MessageID'])
+      rescue Exception => e
+        puts "#{e.message} \n\n #{e.backtrace.inspect} : #{parsed_payload['MessageID']}"
+        ErrorMailer.notify_sysadmin("Importing message details from postmark has error #{parsed_payload['MessageID']}", e.message, e.backtrace).deliver
+      end
 
-      Rails.logger.info "Parse Payload : #{JSON.parse(payload)}"
-      load = JSON.parse(payload)
-      Rails.logger.info "Webhook payload parsed MessageID: #{load['MessageID']}"
-      # Rails.logger.info "Webhook ID: #{@webhook.id} and MessageID is #{@webhook.payload[:MessageID]}"
-      # @webhook.migrate_message!
       render json: @webhook, status: :created
     else
       render json: @webhook.errors, status: :unprocessable_entity
