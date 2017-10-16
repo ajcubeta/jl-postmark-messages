@@ -5,41 +5,41 @@ class MessageDetail < ApplicationRecord
 
     if msg_detail
       msg_detail.update_attributes(
-        text_body: detail["TextBody"] rescue '',
-        html_body: detail["HtmlBody"] rescue '',
-        tag: detail["Tag"] rescue '',
-        message_id: detail["MessageID"] rescue '',
-        to: detail["To"] rescue [],
-        cc: detail["Cc"] rescue [],
-        bcc: detail["Bcc"] rescue [],
-        recipients: detail["Recipients"] rescue [],
-        received_at: detail["ReceivedAt"] rescue nil,
-        from: detail["From"] rescue '',
-        subject: detail["Subject"] rescue '',
-        attachments: detail["Attachments"] rescue [],
-        status: detail["Status"] rescue '',
-        track_opens: detail["TrackOpens"] rescue nil,
-        track_opens: detail["TrackLinks"] rescue '',
-        message_events: detail["MessageEvents"] rescue []
+        text_body: detail["TextBody"],
+        html_body: detail["HtmlBody"],
+        tag: detail["Tag"],
+        message_id: detail["MessageID"],
+        to: detail["To"],
+        cc: detail["Cc"],
+        bcc: detail["Bcc"],
+        recipients: detail["Recipients"],
+        received_at: detail["ReceivedAt"],
+        from: detail["From"],
+        subject: detail["Subject"],
+        attachments: detail["Attachments"],
+        status: detail["Status"],
+        track_opens: detail["TrackOpens"],
+        track_opens: detail["TrackLinks"],
+        message_events: detail["MessageEvents"]
       )
       if msg_detail.save
         puts "Update imported message details of MessageID : #{msg_id}"
         outbound_message = OutboundMessage.where(message_id: msg_id).take
         puts "Updating Message MessageID#{message_detail.message_id} to OutboundMessage"
         outbound_message.update_attributes(
-          tag: detail["Tag"] rescue '',
-          message_id: detail["MessageID"] rescue '',
-          to: detail["To"] rescue [],
-          cc: detail["Cc"] rescue [],
-          bcc: detail["Bcc"] rescue [],
-          recipients: detail["Recipients"] rescue [],
-          received_at: detail["ReceivedAt"] rescue nil,
-          from: detail["From"] rescue '',
-          subject: detail["Subject"] rescue '',
-          attachments: detail["Attachments"] rescue [],
-          status: detail["Status"] rescue '',
-          track_opens: detail["TrackOpens"] rescue nil,
-          track_opens: detail["TrackLinks"] rescue ''
+          tag: detail["Tag"],
+          message_id: detail["MessageID"],
+          to: detail["To"],
+          cc: detail["Cc"],
+          bcc: detail["Bcc"],
+          recipients: detail["Recipients"],
+          received_at: detail["ReceivedAt"],
+          from: detail["From"],
+          subject: detail["Subject"],
+          attachments: detail["Attachments"],
+          status: detail["Status"],
+          track_opens: detail["TrackOpens"],
+          track_opens: detail["TrackLinks"
         )
         outbound_message.save
       end
