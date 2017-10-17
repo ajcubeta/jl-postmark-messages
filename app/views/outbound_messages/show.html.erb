@@ -16,7 +16,7 @@
 
 <p><small>RECIPIENT(s)</strong></small>:</p>
 
-<div>
+<div style="width: 65%;">
   <% @message.message_events.each do |event| %>
     <% if ["Delivered", "Opened"].include?(event['Type']) %>
       <% if event['Type'].eql?("Delivered") %>
