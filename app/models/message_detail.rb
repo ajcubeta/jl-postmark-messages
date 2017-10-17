@@ -39,7 +39,7 @@ class MessageDetail < ApplicationRecord
           attachments: detail["Attachments"],
           status: detail["Status"],
           track_opens: detail["TrackOpens"],
-          track_opens: detail["TrackLinks"
+          track_opens: detail["TrackLinks"]
         )
         outbound_message.save
       end
