@@ -150,4 +150,13 @@ class MessageDetail < ApplicationRecord
     return {} if message.blank?
     parsed_message = JSON.parse(message)
   end
+
+  # def normalize_to_recipient
+  #   payload = @webhook.payload
+  #   parsed_payload = JSON.parse(payload)
+  #
+  #   recipient = JSON.parse(to[0])
+  #   return recipient
+  #   # "#{recipient['Name']} #{recipient['Email']}"
+  # end
 end

@@ -16,9 +16,15 @@
 
 <p><small>RECIPIENT(s)</strong></small>:</p>
 
+<!-- <p><small>To</strong></small>:
+  <span><%#= @message.normalize_to_recipient %></span>
+</p>
+
+<p><small>Cc</strong></small>: <span><%= @message.cc %></span></p> -->
+
 <div style="width: 65%;">
   <% @message.message_events.each do |event| %>
-    <% if ["Delivered", "Opened"].include?(event['Type']) %>
+    <% if ["Delivered", "Opened", "Clicked"].include?(event['Type']) %>
       <% if event['Type'].eql?("Delivered") %>
         <div>
           <ul style="list-style: none;">
@@ -29,6 +35,18 @@
           </ul>
         </div>
       <% elsif event['Type'].eql?("Opened") %>
+        <div>
+          <ul style="list-style: none;">
+            <li><small>Message <font color='blue'><b><%= event['Type'] %></b></font> by <a href="mailto:<%= event["Recipient"] %>" target="_top"><%= event["Recipient"].downcase %></a> <br /></small></li>
+            <li>
+              <div style="max-width: 50%">
+                <small><font color='grey'><%= event['Details']['Summary'] %></font></small>
+              </div>
+            </li>
+            <li><small><font color='orange'><%= event['ReceivedAt'].to_datetime.strftime("%b %m, %l:%M %p") rescue '' %></font></small></li>
+          </ul>
+        </div>
+      <% elsif event['Type'].eql?("Clicked") %>
         <div>
           <ul style="list-style: none;">
             <li><small>Message <font color='blue'><b><%= event['Type'] %></b></font> by <a href="mailto:<%= event["Recipient"] %>" target="_top"><%= event["Recipient"].downcase %></a> <br /></small></li>
