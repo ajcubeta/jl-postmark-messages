@@ -77,10 +77,10 @@ class OutboundMessage < ApplicationRecord
     end
   end
 
-  def message_recipients
-    # From "{\"Email\"=>\"send2weiss@gmail.com\", \"Name\"=>\"\"}"
-    # To ['' <send2weiss@gmail.com>, '' <send2weiss@gmail.com>]
-  end
+  # def message_recipients
+  #   # From "{\"Email\"=>\"send2weiss@gmail.com\", \"Name\"=>\"\"}"
+  #   # To ['' <send2weiss@gmail.com>, '' <send2weiss@gmail.com>]
+  # end
 
   def self.query_postmark_outbound_messages(date_request, offset=0)
     return [] if date_request.blank?
