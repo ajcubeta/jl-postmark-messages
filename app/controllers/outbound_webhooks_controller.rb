@@ -33,6 +33,17 @@ class OutboundWebhooksController < ApplicationController
     end
   end
 
+  def bounce
+    request.body.rewind
+    @webhook = OutboundWebhook.new(payload: request.body.read, webhook_type: 'Bounced')
+
+    if @webhook.save
+      render json: @webhook, status: :created
+    else
+      render json: @webhook.errors, status: :unprocessable_entity
+    end
+  end
+
   def opens
     request.body.rewind
     @webhook = OutboundWebhook.new(payload: request.body.read, webhook_type: 'Opened')
@@ -55,9 +66,9 @@ class OutboundWebhooksController < ApplicationController
     end
   end
 
-  def bounce
+  def click
     request.body.rewind
-    @webhook = OutboundWebhook.new(payload: request.body.read, webhook_type: 'Bounced')
+    @webhook = OutboundWebhook.new(payload: request.body.read, webhook_type: 'Clicked')
 
     if @webhook.save
       render json: @webhook, status: :created
@@ -79,5 +90,10 @@ class OutboundWebhooksController < ApplicationController
   def opened_outbound_messages
     @title = "Outbound Webhooks - Opened"
     @webhooks = OutboundWebhook.where(webhook_type: 'Opened').all
+  end
+
+  def clicked_outbound_messages
+    @title = "Outbound Webhooks - Clicked"
+    @webhooks = OutboundWebhook.where(webhook_type: 'Clicked').all
   end
 end

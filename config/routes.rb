@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     post 'delivery',  on: :collection
     post 'bounce',    on: :collection
     post 'opens',     on: :collection
+    post 'click',     on: :collection
   end
 
   resources :outbound_messages
